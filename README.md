@@ -53,9 +53,3 @@ Integrating Chart.js for the "Top 5 Selling Products" dashboard presented a chal
 * **`templates/index.html`:** The dynamic dashboard. It uses conditional rendering to display a marketing landing page for unauthenticated users, or a comprehensive financial overview with Chart.js for logged-in users.
 * **`templates/sell.html` & `add.html` & `edit.html`:** The CRUD interface forms, fully secured with `required` HTML5 attributes and numeric step constraints.
 * **`templates/history.html` & `products.html`:** Data presentation layers utilizing responsive tables and custom Jinja2 string formatting to display monetary values clearly (omitting decimals and using standard thousands separators).
-
-## Conclusion
-"Mi Inventario" successfully demonstrates the practical application of full-stack development principles, secure database design, and user-centric problem solving. It provides a highly functional, secure, and visually polished tool ready to deploy for real-world business management.
-
-## Acknowledgements
-During the development of this project, AI assistants (Gemini) were used as supplementary tools for debugging code, refactoring comments into professional English, and optimizing CSS/Bootstrap layouts, in accordance with the CS50 final project AI policy. The core logic, database architecture, and business requirements are my own original work.
