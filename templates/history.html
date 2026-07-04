@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}Historial de Ventas{% endblock %}
+
+{% block main %}
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h2>Historial de Transacciones</h2>
+        <p class="text-muted">Registro detallado y cronológico de todas las ventas realizadas.</p>
+    </div>
+</div>
+
+<div class="table-responsive bg-white shadow-sm rounded p-3">
+    <table class="table table-hover table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID Transacción</th>
+                <th>Fecha y Hora</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Total Cobrado</th>
+                <th>Ganancia Neta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in history %}
+                <tr>
+                    <td class="text-muted">#{{ sale.id }}</td>
+                    <td>{{ sale.sale_date }}</td>
+                    <td class="fw-bold">{{ sale.name }}</td>
+                    <td>{{ sale.quantity }}</td>
+                    <td class="text-primary fw-bold">${{ "{:,.0f}".format(sale.total_price).replace(',', '.') }}</td>
+                    <td class="text-success fw-bold">+${{ "{:,.0f}".format(sale.profit).replace(',', '.') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">
+                        Aún no se han registrado ventas en el sistema.
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

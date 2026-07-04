@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}Editar Producto{% endblock %}
+
+{% block main %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-secondary">
+            <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Editar Producto</h4>
+                <form action="/edit/{{ product.id }}" method="post" class="m-0" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto permanentemente?');">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </div>
+            <div class="card-body p-4">
+                <form action="/edit/{{ product.id }}" method="post">
+                    <input type="hidden" name="action" value="update">
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre del Producto</label>
+                        <input class="form-control" id="name" name="name" type="text" value="{{ product.name }}" required>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="buy_price" class="form-label">Precio de Compra ($)</label>
+                            <input class="form-control" id="buy_price" name="buy_price" type="number" min="0" step="0.01" value="{{ product.buy_price }}" required>
+                        </div>
+                        <div class="col">
+                            <label for="sell_price" class="form-label">Precio de Venta ($)</label>
+                            <input class="form-control" id="sell_price" name="sell_price" type="number" min="0" step="0.01" value="{{ product.sell_price }}" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label for="stock" class="form-label">Stock Actual</label>
+                            <input class="form-control" id="stock" name="stock" type="number" min="0" value="{{ product.stock }}" required>
+                        </div>
+                        <div class="col">
+                            <label for="min_stock" class="form-label">Alerta Stock Mínimo</label>
+                            <input class="form-control" id="min_stock" name="min_stock" type="number" min="0" value="{{ product.min_stock }}" required>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100" type="submit">Guardar Cambios</button>
+                    <a href="/products" class="btn btn-outline-secondary w-100 mt-2">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

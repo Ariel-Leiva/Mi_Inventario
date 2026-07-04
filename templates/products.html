@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}Mis Productos{% endblock %}
+
+{% block main %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h2>Mi Inventario</h2>
+        <p class="text-muted">Tienes <strong>{{ total_items }}</strong> artículos en total, valorados en <strong>${{ "{:,.0f}".format(total_investment).replace(',', '.') }}</strong> (Costo).</p>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar producto por nombre...">
+        </div>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="/add" class="btn btn-primary">➕ Nuevo Producto</a>
+    </div>
+</div>
+
+<div class="table-responsive bg-white shadow-sm rounded p-3">
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Producto</th>
+                <th>Costo</th>
+                <th>Precio Público</th>
+                <th>Stock Actual</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in inventory %}
+                <tr>
+                    <td class="fw-bold">{{ item.name }}</td>
+                    <td>${{ "{:,.0f}".format(item.buy_price).replace(',', '.') }}</td>
+                    <td>${{ "{:,.0f}".format(item.sell_price).replace(',', '.') }}</td>
+
+                    <td>
+                        {% if item.stock <= item.min_stock %}
+                            <span class="badge bg-danger fs-6">{{ item.stock }} (Bajo)</span>
+                        {% else %}
+                            <span class="badge bg-success fs-6">{{ item.stock }}</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="/edit/{{ item.id }}" class="btn btn-sm btn-outline-secondary">Editar</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-4">
+                        Aún no tienes productos en tu inventario. <br>
+                        <a href="/add" class="btn btn-sm btn-outline-primary mt-2">Agregar el primero</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    // Select search input
+    const searchInput = document.getElementById('searchInput');
+
+    // Listen for keyup events
+    searchInput.addEventListener('keyup', function() {
+        // Convert input to lowercase
+        let filter = this.value.toLowerCase();
+
+        // Select all table body rows
+        let rows = document.querySelectorAll('tbody tr');
+
+        // Loop through rows
+        rows.forEach(row => {
+            // Ensure row has cells
+            if (row.cells.length > 0) {
+                // Get product name from first cell
+                let productName = row.cells[0].textContent.toLowerCase();
+
+                // Toggle row visibility
+                if (productName.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

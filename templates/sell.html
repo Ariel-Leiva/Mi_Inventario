@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Vender Producto{% endblock %}
+
+{% block main %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-success">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Registrar Venta</h4>
+            </div>
+            <div class="card-body p-4">
+                <form action="/sell" method="post">
+
+                    <div class="mb-4">
+                        <label for="product_id" class="form-label">Seleccionar Producto</label>
+                        <select class="form-select form-select-lg" id="product_id" name="product_id" required autofocus>
+                            <option value="" disabled selected>Elige un producto disponible...</option>
+                            {% for product in products %}
+                                <option value="{{ product.id }}">
+                                    {{ product.name }} - ${{ "{:,.0f}".format(product.sell_price).replace(',', '.') }} (Stock: {{ product.stock }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="quantity" class="form-label">Cantidad a vender</label>
+                        <input class="form-control form-control-lg" id="quantity" name="quantity" type="number" min="1" placeholder="Ej: 2" required>
+                    </div>
+
+                    <button class="btn btn-success btn-lg w-100" type="submit">Confirmar Venta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
